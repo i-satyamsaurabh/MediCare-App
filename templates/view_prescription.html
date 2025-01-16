@@ -208,9 +208,62 @@
             .container {
                 margin-top: 50px;
                 margin-left: 0;
+                font-size: medium;
+            }
+
+            .patient-details {
+                font-size: small;
+                text-wrap: nowrap;
+                display: inline-flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                margin-right: 0;
+            }
+
+            .text-end {
+                margin-top: 35px;
+                text-wrap: nowrap;
+                margin-left: 0;
             }
 
         }
+
+        @media print {
+            .print-btn {
+                display: none;
+            }
+
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            .prescription-card {
+                box-shadow: none;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .container {
+                padding: 0;
+                width: 100%;
+                margin: 0;
+            }
+
+            .section {
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid #eee;
+            }
+
+            .back-btn {
+                display: none;
+            }
+        }
+
+        +
     </style>
 </head>
 
