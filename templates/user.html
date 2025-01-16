@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HealthConnect - Patient Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #64748b;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #06b6d4;
+            --light: #f1f5f9;
+            --dark: #0f172a;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --primary-blue: #007bff;
+            --primary-dark: #052a52;
+            --transition: 0.3s ease;
+        }
+
+        body {
+            background-color: var(--gray-50);
+            /* font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark); */
+            font-weight: bold;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .sidebar {
+            width: 265px;
+            background: white;
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 1rem;
+        }
+
+        .nav-link {
+            color: var(--gray-500);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.30rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: var(--primary-light);
+            color: white;
+        }
+
+        .nav-link i {
+            width: 1.5rem;
+        }
+
+        .main-content {
+            margin-left: 245px;
+            padding: 2rem;
+        }
+
+        .search-section {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-section i {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        .search-section input {
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem 1rem 3.5rem;
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .appointment-section,
+        .symptom-checker {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-200);
+        }
+
+        .doctor-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--gray-200);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .doctor-card:hover {
+            transform: translateX(5px);
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .doctor-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gray-200);
+        }
+
+        .badge {
+            padding: 0.5rem 0.75rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+        }
+
+        .awareness-card {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            height: 300px;
+            margin-bottom: 1.5rem;
+        }
+
+        .awareness-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .awareness-card:hover .awareness-img {
+            transform: scale(1.05);
+        }
+
+        .awareness-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+        }
+
+        .emergency-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--danger);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.5);
+            transition: all 0.2s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .emergency-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 12px -1px rgba(239, 68, 68, 0.6);
+        }
+
+        .appointment-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+
+        .navbar-brand {
+            font-size: 1.55rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: color var(--transition);
+        }
+
+        .navbar-brand:hover {
+            color: var(--primary-dark);
+        }
+
+        .profile-img {
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .symptom-checker {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .symptom-checker:hover {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .condition-card {
+            transition: transform 0.2s ease;
+        }
+
+        .condition-card:hover {
+            transform: translateX(5px);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.1);
+        }
+
+        .badge {
+            font-weight: 500;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .appointment-list {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.05rem;
+
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+        .appointment-item {
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            background: var(--gray-50);
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid var(--gray-200);
+        }
+
+        .appointment-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .doctor-info h6 {
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .appointment-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .appointment-date {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .appointment-badge {
+            padding: 0.35rem 0.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .appointment-list {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.5rem;
+            width: 26.5vw;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .appointment-list h6 {
+            color: #2563eb;
+            font-size: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .appointment-item {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .appointment-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        }
+
+        .appointment-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(37, 99, 235, 0.03), transparent);
+            z-index: 0;
+        }
+
+        .appointment-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .doctor-info h6 {
+            color: #2563eb;
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+
+        .doctor-info p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
+        }
+
+        .appointment-badge {
+            background: rgba(37, 99, 235, 0.1);
+            color: #2563eb;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .appointment-badge i {
+            font-size: 0.75rem;
+        }
+
+        .appointment-badge.upcoming {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .appointment-badge.completed {
+            background: rgba(100, 116, 139, 0.1);
+            color: #64748b;
+        }
+
+        .appointment-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            z-index: 2;
+            position: relative;
+        }
+
+        .appointment-actions form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .appointment-actions button {
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .appointment-actions button i {
+            font-size: 0.875rem;
+        }
+
+        .appointment-actions .btn-outline-primary:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+
+        .appointment-actions .btn-outline-danger:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+
+        .no-appointments {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            font-weight: 500;
+        }
+
+        .no-appointments i {
+            font-size: 2rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .search-section {
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .search-section h4 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+        }
+
+        /* General responsive adjustments */
+        @media (max-width: 991px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                text-wrap: wrap;
+                padding: 1rem;
+            }
+
+            .nav.flex-column {
+                flex-direction: row !;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .nav-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .search-section {
+                width: 100% !important;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .search-section .text-end {
+                text-align: center !important;
+                margin-top: 1rem;
+            }
+
+            .appointment-section,
+            .symptom-checker {
+                padding: 1rem;
+            }
+
+            .appointment-list {
+                width: 100% !important;
+                margin-top: 1.5rem;
+            }
+
+            .doctor-card {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .doctor-info {
+                text-align: center;
+            }
+
+            .awareness-card {
+                margin-bottom: 1rem;
+            }
+
+            .card {
+                width: 100% !important;
+            }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 576px) {
+            .row {
+                margin: 0;
+            }
+
+            .nav-link {
+                width: calc(50% - 0.5rem);
+                text-align: center;
+                justify-content: center;
+            }
+
+            .appointment-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .appointment-actions button {
+                width: 100%;
+            }
+
+            .appointment-badge {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
+            }
+
+            .appointment-item {
+                padding: 1rem;
+            }
+
+            .doctor-avatar {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 0.5rem;
+            }
+
+            .badge {
+                font-size: 0.75rem;
+            }
+
+            .emergency-btn {
+                width: 50px;
+                height: 50px;
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .col-lg-8,
+            .col-lg-4 {
+                padding: 0;
+            }
+
+            .form-control,
+            .form-select {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .sidebar-logo {
+                justify-content: center;
+            }
+
+            .profile-img {
+                height: 50px;
+            }
+
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .awareness-card {
+                height: 250px;
+            }
+
+            .awareness-overlay {
+                padding: 1rem;
+            }
+
+            .awareness-overlay h4 {
+                font-size: 1.2rem;
+            }
+
+            .symptom-checker textarea {
+                height: 100px;
+            }
+        }
+
+        /* Tablet specific adjustments */
+        @media (min-width: 577px) and (max-width: 991px) {
+            .nav-link {
+                width: auto;
+            }
+
+            .appointment-actions {
+                flex-direction: row;
+            }
+
+            .doctor-card {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .awareness-card {
+                height: 275px;
+            }
+        }
+
+        .form-select {
+            max-width: 55vw;
+        }
+
+        #doctors-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .doctor-avatar {
+            margin-left: 30px;
+
+        }
+
+        /* Fix for overlapping content */
+        @media (max-width: 991px) {
+            body {
+                padding-top: 0;
+            }
+
+            .container-fluid {
+                padding: 0;
+            }
+
+            .main-content {
+                overflow-x: hidden;
+            }
+
+            .appointment-list,
+            .card {
+                margin: 1rem 0;
+            }
+        }
+
+        /* Additional accessibility improvements */
+        @media (hover: none) {
+
+            .nav-link:hover,
+            .doctor-card:hover,
+            .appointment-item:hover {
+                transform: none;
+            }
+        }
+
+        /* Print media query */
+        @media print {
+
+            .sidebar,
+            .emergency-btn,
+            .appointment-actions {
+                display: none;
+            }
+
+            .main-content {
+                margin: 0;
+                padding: 0;
+            }
+        }
+
+        /* Fixed Navigation Styles */
+        .sidebar {
+            width: 265px;
+            background: white;
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        /* Main content adjustment for fixed nav */
+        .main-content {
+            margin-left: 235px;
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Responsive Navigation */
+        @media (max-width: 991px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                top: 0;
+                left: 0;
+                padding: 0.75rem;
+                z-index: 1000;
+            }
+
+            .sidebar-logo {
+                padding: 0.5rem 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .nav.flex-column {
+                flex-direction: row !important;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 0.5rem;
+                gap: 0.5rem;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                /* Firefox */
+                -ms-overflow-style: none;
+                /* IE and Edge */
+            }
+
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            .nav.flex-column::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-link {
+                padding: 0.5rem 1rem;
+                white-space: nowrap;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                margin-top: 120px;
+                /* Adjust based on your navbar height */
+                padding: 1rem;
+            }
+
+            .search-section {
+                width: 100% !important;
+            }
+        }
+
+        /* Mobile specific navigation */
+        @media (max-width: 576px) {
+            .sidebar {
+                padding: 0.5rem;
+            }
+
+            .sidebar-logo {
+                padding: 0.25rem 0.5rem;
+            }
+
+            .navbar-brand {
+                font-size: 1.1rem;
+            }
+
+            .profile-img {
+                height: 40px;
+            }
+
+            .nav-link {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .main-content {
+                margin-top: 110px;
+                /* Slightly reduced for mobile */
+            }
+        }
+
+        /* Maintain other responsive styles */
+        @media (max-width: 991px) {
+            .row {
+                margin: 0;
+            }
+
+            .appointment-section,
+            .symptom-checker {
+                padding: 1rem;
+            }
+
+            .appointment-list {
+                width: 100% !important;
+                margin-top: 1.5rem;
+            }
+
+            .doctor-card {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .doctor-info {
+                text-align: center;
+            }
+
+            .awareness-card {
+                margin-bottom: 1rem;
+            }
+
+            .card {
+                width: 100% !important;
+            }
+        }
+
+        /* Touch device optimization */
+        @media (hover: none) {
+            .nav-link:hover {
+                transform: none;
+            }
+
+            .nav-link.active {
+                background-color: var(--primary-light);
+                color: white;
+            }
+        }
+
+        /* Additional shadow for fixed nav */
+        .sidebar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Smooth scrolling for iOS */
+        .nav.flex-column {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .search-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 75vw;
+        }
+
+        .welcome-text {
+            margin-bottom: 0;
+        }
+
+        .date-display {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+        }
+
+        .date-display i {
+            color: #2563eb;
+        }
+
+        .appointment-list {
+            background: white;
+            border-radius: 1rem;
+            padding: 0.5rem;
+            width: 26.5vw;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .appointments-container {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(37, 99, 235, 0.2) transparent;
+        }
+
+        .appointments-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .flash-message-center {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1100;
+            width: max-content;
+            min-width: 300px;
+            max-width: 600px;
+        }
+
+        .flash-message {
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            animation: slideIn 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .flash-message.success {
+            background-color: #dcfce7;
+            border-left: 4px solid #22c55e;
+            color: #166534;
+        }
+
+        .flash-message.error {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .flash-message.info {
+            background-color: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            color: #1e40af;
+        }
+
+        .flash-message.warning {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            color: #92400e;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{{ url_for('static', filename='pic4.jpg')}}" alt="WELCOME" class="profile-img me-2">
+                MediCare
+            </a>
+        </div>
+
+        <div class="nav flex-column">
+            <a href="{{ url_for('user') }}" class="nav-link">
+                <i class="fas fa-home"></i>Dashboard
+            </a>
+            <a href="#appointments" class="nav-link">
+                <i class="fas fa-calendar-alt"></i>Appointments
+            </a>
+            <a href="#find-doctors" class="nav-link">
+                <i class="fas fa-user-md"></i>Find Doctors
+            </a>
+            <a href="#symptom-checker" class="nav-link">
+                <i class="fas fa-stethoscope"></i>Symptom Checker
+            </a>
+            <a href="{{ url_for('private_checkup')}}" class="nav-link">
+                <i class="fas fa-lock"></i>Private Checkup
+            </a>
+            <a href="#health-updates" class="nav-link">
+                <i class="fas fa-heart"></i>Health Updates
+            </a>
+            <a href="#profile" class="nav-link">
+                <i class="fas fa-user"></i>Profile
+            </a>
+            <a href="{{ url_for('logout')}}" class="nav-link text-danger">
+                <i class="fas fa-sign-out-alt"></i>Logout
+            </a>
+        </div>
+    </nav>
+
+    <!-- Add Flash Message Center -->
+    <div class="flash-message-center">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }} alert alert-dismissible fade show" role="alert">
+            <div class="d-flex align-items-center">
+                <i
+                    class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'error' %}fa-exclamation-circle{% elif category == 'info' %}fa-info-circle{% else %}fa-exclamation-triangle{% endif %} me-2"></i>
+                <span>{{ message }}</span>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="search-section bg-white rounded-2 shadow-sm p-4" style="width: 75vw;">
+                <div>
+                    <h4 class="mb-0 fw-bold text-primary">Welcome, {{ current_user.name }}!</h4>
+                    <p class="text-secondary mb-0"> We care for your health </p>
+                </div>
+                <div class="d-flex align-items-center" style="gap: 0.5rem; display: flex;">
+
+                    <p class="text-secondary mb-0" style="white-space: nowrap; margin: 0; font-size: 1.2rem;">
+                        {{ datetime.now().strftime('%A, %B %d, %Y') }}
+                    </p>
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+                <!-- Left Column -->
+                <div class="col-lg-8">
+                    <!-- Appointment Section -->
+                    <div class="card appointment-section">
+                        <h5 class="mb-4 fw-bold"> <i class="fas fa-calendar-alt me-2 text-primary"></i> Schedule an
+                            Appointment</h5>
+
+                        {% with messages = get_flashed_messages(category_filter=["appointment"]) %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+
+
+                        <form action="{{ url_for('book_appointment') }}" method="POST">
+                            <div class="row mb-3">
+
+                                <!-- Department Dropdown -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Department</label>
+                                    <select class="form-select" name="department" id="department" required>
+                                        <option value="">Select Department</option>
+                                        {% for department in departments %}
+                                        <option value="{{ department.id }}">{{ department.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <!-- Doctor Dropdown -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Doctor</label>
+                                    <select class="form-select" name="doctor" id="doctor" required>
+                                        <option value="">Select Doctor</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+                            <!-- Date and Time Inputs -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-control" name="date" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Time</label>
+                                    <input type="time" class="form-control" name="time" required>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary btn-lg px-4 fw-bold">
+                                <i class="fas fa-book me-2"></i> Book Appointment
+                            </button>
+                        </form>
+                    </div>
+
+
+                    <!-- Symptom Checker -->
+                    <div class=" card symptom-checker mb-4" id="symptom-checker">
+                        <div class="card-body">
+                            <h5 class="mb-4 fw-bold">
+                                <i class="fas fa-stethoscope me-2 text-primary"></i>
+                                Symptom Checker
+                            </h5>
+
+                            {% with messages = get_flashed_messages(category_filter=["symptom"]) %}
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
+                            <form method="POST" action="/symptom-checker">
+                                <div class="mb-4">
+                                    <label for="symptoms" class="form-label fw-bold text-secondary">What
+                                        symptoms are
+                                        you experiencing?</label>
+                                    <div class="position-relative">
+                                        <textarea class="form-control form-control-lg shadow-sm" id="symptoms"
+                                            name="symptoms" rows="4" style="border-radius: 0.75rem; resize: none;"
+                                            placeholder="Describe your symptoms separated by 
+commas (e.g., fever, headache, nausea)" required></textarea>
+                                        <i class="fas fa-pen text-primary position-absolute"
+                                            style="top: 1rem; right: 1rem;"></i>
+                                    </div>
+                                    <small class="text-muted mt-2 d-block">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Be as specific as possible for better results
+                                    </small>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg px-4 fw-bold">
+                                    <i class="fas fa-search me-2"></i>
+                                    Check Symptoms
+                                </button>
+                            </form>
+
+                            {% if results %}
+                            <div class="mt-4">
+                                <h6 class="fw-bold mb-3">
+                                    <i class="fas fa-clipboard-list me-2 text-primary"></i>
+                                    Possible Conditions
+                                </h6>
+                                <div class="results-container">
+                                    {% for result in results %}
+                                    <div
+                                        class="condition-card bg-light p-3 rounded-3 mb-3 border-start border-4 border-primary">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <h6 class="mb-2 fw-bold text-primary">{{ result.condition }}</h6>
+                                            <span class="badge bg-primary">
+                                                Match: {{ result.match_count }}/{{ result.total_symptoms }}
+                                            </span>
+                                        </div>
+                                        <div class="matched-symptoms">
+                                            <small class="text-secondary">
+                                                <i class="fas fa-check-circle me-1 text-success"></i>
+                                                Matched Symptoms:
+                                            </small>
+                                            <div class="mt-2">
+                                                {% for symptom in result.matching_symptoms %}
+                                                <span class="badge bg-success bg-opacity-10 text-success me-2 mb-2">
+                                                    {{ symptom }}
+                                                </span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="mt-3 p-3 bg-warning bg-opacity-10 rounded-3">
+                                    <p class="mb-0 text-warning">
+                                        <i class="fas fa-exclamation-triangle me-2 "></i>
+                                        This is an initial assessment only. Please consult with a healthcare
+                                        professional for proper diagnosis.
+                                    </p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <!-- Health Awareness Section -->
+                    <div class="mt-4" id="health-updates">
+                        <h5 class="mb-4 fw-bold">Health Awareness Center</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="awareness-card">
+                                    <img src="{{ url_for('static', filename='pic2.jpeg') }}" alt="Diabetes Management"
+                                        class="awareness-img">
+                                    <div class="awareness-overlay">
+                                        <h4 class="mb-2 fw-bold text-align">Understanding Diabetes</h4>
+                                        <p class="mb-3">Learn about symptoms, management, and prevention strategies.</p>
+                                        <a href="#" class="btn btn-light btn-sm">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="awareness-card">
+                                    <img src="{{ url_for('static', filename='pic3.jpeg') }}" alt="Mental Health"
+                                        class="awareness-img">
+                                    <div class="awareness-overlay">
+                                        <h4 class="mb-2 fw-bold">Mental Health Matters</h4>
+                                        <p class="mb-3">Discover ways to maintain your mental well-being.</p>
+                                        <a href="#" class="btn btn-light btn-sm">Learn More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card symptom-checker mb-4" id="profile">
+                            <div class="row" style="height: 300px;">
+                                <div class="card-body">
+                                    <h5 class="mb-4 fw-bold text-primary">
+                                        <i class="fas fa-user me-2"></i> My Profile
+                                    </h5>
+
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <strong>Name:</strong> {{ current_user.name }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Email:</strong> {{ current_user.email }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Phone:</strong> {{ current_user.patient.mobile }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Age:</strong> {{ current_user.patient.age }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            <strong>Gender:</strong> {{ current_user.patient.gender }}
+                                        </li>
+                                        <h5 class="mb-4 fw-bold text-primary text-end">
+                                            <a href="{{ url_for('forgot_password') }}" class="btn btn-primary"> <i
+                                                    class="fas fa-edit me-2"></i> Change Password </a>
+                                        </h5>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-lg-4" id="appointments">
+                    <!-- Appointments -->
+                    <!-- Right Column -->
+                    <div class="col-lg-4" id="appointments">
+                        <div class="appointment-list">
+                            <h6 class="mb-3 fw-bold position-sticky top-0 bg-white p-2">
+                                <i class="fas fa-calendar-check me-2"></i>Recent Appointments
+                            </h6>
+                            <div class="appointments-container"
+                                style="max-height: 600px; overflow-y: auto; padding-right: 8px;">
+                                {% if appointments %}
+                                {% for appointment in appointments %}
+                                <div class="appointment-item">
+                                    <div class="appointment-header">
+                                        <div class="doctor-info">
+                                            <h6 class="fw-bold">{{ appointment.doctor_name }}</h6>
+                                            <p class="mb-1">{{ appointment.specialization }}</p>
+                                            <div
+                                                class="appointment-badge {% if appointment.status == 'upcoming' %}upcoming{% else %}completed{% endif %}">
+                                                <i
+                                                    class="fas {% if appointment.status == 'upcoming' %}fa-clock{% else %}fa-check-circle{% endif %}"></i>
+                                                {{ appointment.date.strftime('%B %d, %Y') }} at {{
+                                                appointment.time.strftime('%I:%M %p') }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="appointment-actions">
+                                        {% if appointment.status == 'upcoming' %}
+                                        <form action="{{ url_for('edit_appointment', appointment_id=appointment.id) }}"
+                                            method="GET" style="display: inline;">
+                                            <button type="submit" class="btn btn-outline-primary">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                        </form>
+                                        <form
+                                            action="{{ url_for('delete_appointment', appointment_id=appointment.id) }}"
+                                            method="POST" style="display: inline;">
+                                            <button type="submit" class="btn btn-outline-danger">
+                                                <i class="fas fa-times"></i> Cancel
+                                            </button>
+                                        </form>
+                                        {% elif appointment.status == 'completed' %}
+                                        <form action="{{ url_for('rate_appointment', appointment_id=appointment.id) }}"
+                                            method="GET" style="display: inline;">
+                                            <button type="submit" class="btn btn-outline-primary">
+                                                <i class="fas fa-star"></i> Rate
+                                            </button>
+                                        </form>
+                                        {% if appointment.prescriptions and appointment.prescriptions|length > 0 %}
+                                        <form action="{{ url_for('view_prescription', appointment_id=appointment.id) }}"
+                                            method="GET" style="display: inline;">
+                                            <button type="submit" class="btn btn-outline-primary text-nowrap">
+                                                <i class="fas fa-file-medical"></i> View Prescription
+                                            </button>
+                                        </form>
+                                        {% else %}
+                                        <div
+                                            class="prescription-status p-2 rounded-3 bg-light border border-secondary text-nowrap border-opacity-25 text-center">
+                                            <p class="text-secondary mb-0" style="font-size: 0.73rem; display: inline;">
+                                                No
+                                                prescription available
+                                            </p>
+                                        </div>
+                                        {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="no-appointments">
+                                    <i class="fas fa-calendar-times"></i>
+                                    <p class="mb-0">No appointments scheduled</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Find Doctors -->
+                    <div class="card" id="find-doctors" style="width: 28.5vw; margin-top: 10px;">
+                        <div class="card-body">
+                            <h5 class="mb-4 fw-bold">Find Specialists</h5>
+
+                            <select class="form-select mb-4" id="specialization-select">
+                                <option value="">All Specializations</option>
+                                {% for dept in departments %}
+                                <option value="{{ dept.id }}" {% if selected_dept==dept.id %}selected{% endif %}>
+                                    {{ dept.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+
+                            <!-- Scrollable Doctors Container -->
+                            <div id="doctors-container"
+                                style="max-height: 300px; overflow-x: hidden; scrollbar-color: #3294f5 #f1f1f1; scrollbar-width: thin;">
+                                {% if doctors %}
+                                {% for doctor in doctors %}
+                                <div class="doctor-card d-flex align-items-start mb-2">
+                                    <img style="width: 55px; height: 50px; border-radius: 50%; object-fit: cover;"
+                                        src="{{ doctor.image if doctor.image else url_for('static', filename='pic4.jpg') }}"
+                                        alt="Doctor" class="doctor-avatar me-3">
+                                    <div>
+                                        <h6 class="mb-1">{{ doctor.name }}</h6>
+                                        <p class="mb-1 text-secondary">{{ doctor.specialization }}</p>
+                                        <span class="badge bg-success">Experience {{ doctor.experience }} years</span>
+                                        {% if doctor.rating %}
+                                        <div class="mt-1">
+                                            <span class="text-warning">
+                                                <i class="fas fa-star"></i> {{ "%.1f"|format(doctor.rating) }}
+                                            </span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="text-center p-3">
+                                    <i class="fas fa-user-md text-secondary mb-2" style="font-size: 2rem;"></i>
+                                    <p class="text-secondary mb-0">No doctors found</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script>
+                        document.getElementById('specialization-select').addEventListener('change', function () {
+                            const selectedDept = this.value;
+
+                            fetch(`/api/search_doctors?specialization=${selectedDept}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    const container = document.getElementById('doctors-container');
+
+                                    if (data.doctors.length === 0) {
+                                        container.innerHTML = `
+                    <div class="text-center p-3">
+                        <i class="fas fa-user-md text-secondary mb-2" style="font-size: 2rem;"></i>
+                        <p class="text-secondary mb-0">No doctors found</p>
+                    </div>
+                `;
+                                        return;
+                                    }
+
+                                    container.innerHTML = data.doctors.map(doctor => `
+                <div class="doctor-card">
+                    <img style="width: 75px; height: 70px; border-radius: 50%; object-fit: cover;"
+                        src="${'/static/pic4.jpg'}"
+                        alt="Doctor" class="doctor-avatar">
+                    <div>
+                        <h6 class="mb-1"> ${doctor.name}</h6>
+                        <p class="mb-1 text-secondary">${doctor.specialization}</p>
+                        <span class="badge bg-success">Experience ${doctor.experience} years</span>
+                        ${doctor.rating ? `
+                            <div class="mt-1">
+                                <span class="text-warning">
+                                    <i class="fas fa-star"></i> ${doctor.rating.toFixed(1)}
+                                </span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+                                })
+                                .catch(error => console.error('Error:', error));
+                        });
+                    </script>
+                    <!-- Daily Health Tips -->
+                    <div class="card border-0 shadow-sm" style="width: 26.5vw; margin-top: 10px;">
+                        <div class="card-body">
+                            <h5 class="mb-4">Daily Health Tips</h5>
+
+                            <div class="p-3 bg-light rounded-3 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-water text-primary me-2"></i>
+                                    <h6 class="mb-0">Stay Hydrated</h6>
+                                </div>
+                                <p class="mb-0 text-secondary">Drink 8 glasses of water daily for optimal
+                                    health.
+                                </p>
+                            </div>
+
+                            <div class="p-3 bg-light rounded-3 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-walking text-success me-2"></i>
+                                    <h6 class="mb-0">Daily Exercise</h6>
+                                </div>
+                                <p class="mb-0 text-secondary">30 minutes of moderate exercise can boost your
+                                    mood.
+                                </p>
+                            </div>
+
+                            <div class="p-3 bg-light rounded-3 mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-heartbeat text-danger me-2"></i>
+                                    <h6 class="mb-0">Healthy Eating</h6>
+                                </div>
+                                <p class="mb-0 text-secondary">Eat a balanced diet with plenty of fruits and
+                                    vegetables.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+    </div>
+    </div>
+    </div>
+    </main>
+
+    <!-- Emergency Button -->
+    <button class="emergency-btn" onclick="sendEmergencyAlert()">
+        <i class="fas fa-phone-alt fa-lg"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize tooltips
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Add hover effect to doctor cards
+        const doctorCards = document.querySelectorAll('.doctor-card');
+        doctorCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateX(5px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Add emergency button click handler
+        const emergencyBtn = document.querySelector('.emergency-btn');
+        emergencyBtn.addEventListener('click', () => {
+            if (confirm('Do you want to call emergency services?')) {
+                // In a real application, this would trigger an emergency protocol
+                alert('Connecting to emergency services...');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const symptomForm = document.querySelector('form[action="/symptom-checker"]');
+            const resultsContainer = document.querySelector('.symptom-checker .card-body');
+
+            if (symptomForm) {
+                symptomForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(symptomForm);
+
+                    fetch('/symptom-checker', {
+                        method: 'POST',
+                        body: formData
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Handle flash messages
+                            if (data.flash) {
+                                const flashHtml = `
+                    <div class="alert alert-${data.flash.category} alert-dismissible fade show" role="alert">
+                        ${data.flash.message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                                // Insert flash message at the top of the form
+                                const existingFlash = resultsContainer.querySelector('.alert');
+                                if (existingFlash) {
+                                    existingFlash.remove();
+                                }
+                                symptomForm.insertAdjacentHTML('beforebegin', flashHtml);
+                                return;
+                            }
+
+                            // Handle results
+                            if (data.results && data.results.length > 0) {
+                                const resultsHtml = `
+                    <div class="mt-4">
+                        <h6 class="fw-bold mb-3">
+                            <i class="fas fa-clipboard-list me-2 text-primary"></i>
+                            Possible Conditions
+                        </h6>
+                        <div class="results-container">
+                            ${data.results.map(result => `
+                                <div class="condition-card bg-light p-3 rounded-3 mb-3 border-start border-4 border-primary">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <h6 class="mb-2 fw-bold text-primary">${result.condition}</h6>
+                                        <span class="badge bg-primary">
+                                            Match: ${result.match_count}/${result.total_symptoms}
+                                        </span>
+                                    </div>
+                                    <div class="matched-symptoms">
+                                        <small class="text-secondary">
+                                            <i class="fas fa-check-circle me-1 text-success"></i>
+                                            Matched Symptoms:
+                                        </small>
+                                        <div class="mt-2">
+                                            ${result.matching_symptoms.map(symptom => `
+                                                <span class="badge bg-success bg-opacity-10 text-success me-2 mb-2">
+                                                    ${symptom}
+                                                </span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="mt-3 p-3 bg-warning bg-opacity-10 rounded-3">
+                            <p class="mb-0 text-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                This is an initial assessment only. Please consult with a healthcare professional for proper diagnosis.
+                            </p>
+                        </div>
+                    </div>
+                `;
+
+                                // Remove existing results if any
+                                const existingResults = resultsContainer.querySelector('.mt-4');
+                                if (existingResults) {
+                                    existingResults.remove();
+                                }
+
+                                // Append new results
+                                resultsContainer.insertAdjacentHTML('beforeend', resultsHtml);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            const errorHtml = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    An error occurred. Please try again.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `;
+                            symptomForm.insertAdjacentHTML('beforebegin', errorHtml);
+                        });
+                });
+            }
+
+            // Department and Doctor dropdown functionality
+            const departmentDropdown = document.getElementById('department');
+            const doctorDropdown = document.getElementById('doctor');
+
+            if (departmentDropdown && doctorDropdown) {
+                departmentDropdown.addEventListener('change', function () {
+                    const selectedDepartment = this.value;
+
+                    // Clear and reset doctor dropdown
+                    doctorDropdown.innerHTML = '<option value="">Select Doctor</option>';
+
+                    if (selectedDepartment) {
+                        // Fetch doctors for selected department
+                        fetch(`/get_doctors/${selectedDepartment}`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                data.forEach(doctor => {
+                                    const option = document.createElement('option');
+                                    option.value = doctor.id;
+                                    option.textContent = doctor.name;
+                                    doctorDropdown.appendChild(option);
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error fetching doctors:', error);
+                                doctorDropdown.innerHTML = '<option value="">Error loading doctors</option>';
+                            });
+                    }
+                });
+            }
+        });
+        function sendEmergencyAlert() {
+            fetch('/emergency', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Emergency alert sent successfully!");
+                    } else {
+                        alert("Failed to send emergency alert: " + data.error);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Auto-dismiss flash messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function () {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(message => {
+                setTimeout(() => {
+                    message.classList.remove('show');
+                    setTimeout(() => message.remove(), 300);
+                }, 5000);
+            });
+        });
+
+
+
+    </script>
+</body>
+
+</html>

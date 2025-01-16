@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Prescription</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1000px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+            padding: 1.5rem;
+        }
+
+        .card-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        }
+
+        .medication-row {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem !important;
+            transition: all 0.3s ease;
+        }
+
+        .medication-row:hover {
+            background-color: #f1f3f5;
+        }
+
+        .btn {
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success {
+            background-color: #20c997;
+            border-color: #20c997;
+        }
+
+        .btn-success:hover {
+            background-color: #1ba97f;
+            border-color: #1ba97f;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2d3b;
+            border-color: #bb2d3b;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+            border: none;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0b5ed7, #0bacce);
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .medication-row {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-2 mb-5">
+        <div class="card">
+            <div class="card-header">
+                <div class="header-logo">
+                    <img src="{{ url_for('static', filename='pic4.jpg') }}" alt="Medicare Logo">
+                    <h5 class="text-white mb-0">MEDICARE</h5>
+                </div>
+                <h5 class="text-white">Create Prescription for Appointment</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <!-- Diagnosis -->
+                    <div class="mb-4">
+                        <label for="diagnosis" class="form-label">
+                            <i class="fas fa-stethoscope me-2"></i>Diagnosis
+                        </label>
+                        <textarea id="diagnosis" name="diagnosis" class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <!-- Medications -->
+                    <h6 class="fw-bold mb-3">
+                        <i class="fas fa-pills me-2"></i>Medications
+                    </h6>
+                    <div id="medications-container">
+                        <div class="row medication-row">
+                            <div class="col-md-3">
+                                <input type="text" name="medicine[]" class="form-control" placeholder="Medicine"
+                                    required>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="dosage[]" class="form-control" placeholder="Dosage" required>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" name="frequency[]" class="form-control" placeholder="Frequency"
+                                    required>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="duration[]" class="form-control" placeholder="Duration"
+                                    required>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger btn-sm remove-medicine w-100">
+                                    <i class="fas fa-trash-alt me-2"></i>Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="add-medicine" class="btn btn-success btn-sm mb-4">
+                        <i class="fas fa-plus me-2"></i>Add Medicine
+                    </button>
+
+                    <!-- Instructions -->
+                    <div class="mb-4">
+                        <label for="instructions" class="form-label">
+                            <i class="fas fa-clipboard-list me-2"></i>Additional Instructions
+                        </label>
+                        <textarea id="instructions" name="instructions" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-file-medical me-2"></i>Create Prescription
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('add-medicine').addEventListener('click', function () {
+            const container = document.getElementById('medications-container');
+            const row = document.createElement('div');
+            row.classList.add('row', 'medication-row');
+            row.innerHTML = `
+                <div class="col-md-3">
+                    <input type="text" name="medicine[]" class="form-control" placeholder="Medicine" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="dosage[]" class="form-control" placeholder="Dosage" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="frequency[]" class="form-control" placeholder="Frequency" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" name="duration[]" class="form-control" placeholder="Duration" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-sm remove-medicine w-100">
+                        <i class="fas fa-trash-alt me-2"></i>Remove
+                    </button>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('remove-medicine') ||
+                event.target.closest('.remove-medicine')) {
+                event.target.closest('.medication-row').remove();
+            }
+        });
+    </script>
+</body>
+
+</html>

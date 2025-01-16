@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medically - Healthcare Solutions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" style="border-radius: 50px; height: 100%;" type="image/x-icon"
+        href="{{ url_for('static', filename='pic4.jpg') }}">
+    <style>
+        :root {
+            --primary-blue: #041517;
+            --primary-dark: #100497;
+            --text-dark: #141617;
+            --text-light: #777777;
+            --bg-light: #F8FAFC;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+
+
+            /* Enhanced Navbar */
+            .navbar {
+                padding: 1rem 0;
+                background: linear-gradient(rgb(248, 249, 249), rgb(214, 234, 240));
+                border-bottom: 1px solid rgba(15, 9, 9, 0.1);
+                box-shadow: 0 2px 15px rgba(222, 103, 103, 0.04);
+                height: 70px;
+                border: #f5fafa solid 1px;
+            }
+
+            .navbar-brand {
+                font-size: 1.85rem;
+                font-weight: 700;
+                color: var(--primary-blue);
+                text-decoration: none;
+                transition: color var(--transition);
+            }
+
+            .navbar-brand:hover {
+                color: var(--primary-dark);
+            }
+
+            .nav-item {
+                position: relative;
+            }
+
+            .nav-link {
+                font-weight: bolder;
+                font-size: 1.25rem;
+                font-family: 'libre baskerville';
+                padding: 0.5rem 1rem !important;
+                color: #27829b;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+            .nav-link:not(.btn)::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: 0;
+                left: 50%;
+                background-color: #0984e3;
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+
+            .nav-link:not(.btn):hover {
+                color: #201464;
+            }
+
+            .nav-link:not(.btn):hover::after {
+                width: 100%;
+            }
+
+            /* Keep the button styling separate */
+            .nav-link.btn {
+                transition: all 0.3s ease;
+            }
+
+            .nav-link.btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(9, 132, 227, 0.2);
+            }
+
+            .navbar-toggler {
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+
+            .navbar-toggler:focus {
+                box-shadow: 0 0 4px rgba(191, 67, 67, 0.25);
+            }
+
+            .profile-img {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            /* Improved Hero Section */
+            .hero {
+                padding: 40px 0 100px;
+                background: linear-gradient(135deg, #f0f2f4 0%, #0c93a5 100%);
+                background-image: url();
+                position: relative;
+                overflow: hidden;
+            }
+
+            .hero::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -50%;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle, rgba(68, 138, 255, 0.1) 0%, transparent 70%);
+                transform: rotate(45deg);
+            }
+
+            .hero-title {
+                font-size: 3.75rem;
+                font-weight: 800;
+                line-height: 1.2;
+                margin-bottom: 1.5rem;
+                background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary-blue) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            /* From Uiverse.io by riyaz7us */
+            .Download-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: inherit;
+                font-weight: 500;
+                font-size: 17px;
+                padding: 12px 20px;
+                color: white;
+                background: linear-gradient(144deg, #166534, #169934 50%, #168844);
+                border: none;
+                box-shadow: 0 0.7em 1.5em -0.5em rgba(59, 78, 48, 0.527);
+                letter-spacing: 0.05em;
+                border-radius: 8px;
+                cursor: pointer;
+                position: relative;
+                transition: all 0.2s;
+
+                /* Added margin-left to move it to the right */
+                margin-left: 220px;
+                width: fit-content;
+                /* Adjust the value as needed */
+            }
+
+
+            .Download-button svg {
+                margin-right: 8px;
+                width: 25px;
+            }
+
+            .Download-button:hover {
+                box-shadow: 0 0.5em 1.5em -0.5em #3b9982;
+                border-top-left-radius: 40px;
+                border-bottom-right-radius: 40px;
+            }
+
+            .Download-button:active {
+                box-shadow: 0 0.3em 1em -0.5em #057631;
+            }
+
+            .Download-button::before {
+                content: "";
+                width: 4px;
+                height: 40%;
+                background-color: white;
+                position: absolute;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                left: 0;
+                transition: all 0.2s;
+            }
+
+            .Download-button::after {
+                content: "";
+                width: 4px;
+                height: 40%;
+                background-color: white;
+                position: absolute;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                right: 0;
+                transition: all 0.2s;
+            }
+
+            .Download-button:hover::before,
+            .Download-button:hover::after {
+                height: 60%;
+            }
+
+            .Download-button:hover::before {
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+                transform: translate(5px, -15px) rotate(45deg);
+            }
+
+            .Download-button:hover::after {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                transform: translate(-5px, 15px) rotate(45deg);
+            }
+
+            /* Contact Card Styling */
+            .contact-card {
+                background: linear-gradient(135deg, #007bff, #00c6ff);
+                padding: 20px;
+                border-radius: 10px;
+                color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .contact-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            .contact-icon {
+                font-size: 30px;
+                margin-right: 15px;
+            }
+
+            /* Heading styling */
+            .section-title {
+                font-size: 36px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 30px;
+            }
+
+            .text-muted {
+                color: rgba(255, 255, 255, 0.7) !important;
+            }
+
+
+            /* Enhanced Service Cards */
+            /* Section Styling */
+            .section-spacing {
+                padding: 60px 0;
+                background: linear-gradient(135deg, #f9f9f9, #eef2f3);
+            }
+
+            .section-title {
+                font-size: 36px;
+                font-weight: bold;
+                color: #333;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            .section-title span {
+                color: #007bff;
+            }
+
+            /* Service Card Styling */
+            .service-card {
+                background: #fff;
+                padding: 30px;
+                border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .service-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .service-icon {
+                font-size: 40px;
+                color: #007bff;
+                margin-bottom: 20px;
+                transition: color 0.3s ease;
+            }
+
+            .service-card:hover .service-icon {
+                color: #00c6ff;
+            }
+
+            h4 {
+                font-size: 24px;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #0b0b0b;
+            }
+
+            .text-muted {
+                color: #164e68;
+            }
+
+            /* Responsive Grid Layout */
+            @media (max-width: 767px) {
+                .service-card {
+                    padding: 20px;
+                }
+
+                .service-icon {
+                    font-size: 35px;
+                }
+
+                h4 {
+                    font-size: 22px;
+                }
+            }
+
+            /* Improved Doctor Cards */
+            .doctor-card {
+                background: rgb(11, 11, 11);
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+                transition: var(--transition);
+            }
+
+            .doctor-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 40px rgba(235, 237, 239, 0.1);
+            }
+
+            .doctor-img {
+                width: 100%;
+                height: 350px;
+                object-fit: cover;
+                transition: var(--transition);
+            }
+
+            .doctor-card:hover .doctor-img {
+                transform: scale(1.05);
+            }
+
+            .doctor-info {
+                padding: 2rem;
+                text-align: center;
+                background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-dark) 100%);
+                color: rgb(255, 255, 255);
+            }
+
+            /* Enhanced Contact Cards */
+            .contact-card {
+                padding: 1rem;
+                color: rgb(239, 234, 234);
+                background: linear-gradient(white, rgba(137, 176, 196, 0.778));
+                border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+                transition: var(--transition);
+                border: 1px solid transparent;
+
+            }
+
+            .contact-card:hover {
+                transform: translateY(-5px);
+                border-color: var(--primary-blue);
+            }
+
+            .contact-icon {
+                color: var(--primary-blue);
+                font-size: 2rem;
+                margin-right: 1.5rem;
+                transition: var(--transition);
+            }
+
+            .contact-card:hover .contact-icon {
+                transform: scale(1.1);
+            }
+
+            .footer {
+                background: linear-gradient(rgba(249, 249, 249, 0.77), rgb(151, 189, 200));
+                color: rgb(251, 245, 245);
+                padding: 1.5rem 0;
+                font-size: 0.9rem;
+                position: relative;
+                text-align: center;
+            }
+
+            .contact-info p {
+                margin: 0.5rem 0;
+                font-size: 0.9rem;
+                color: rgb(30, 24, 24);
+            }
+
+            .contact-info p i {
+                margin-right: 0.5rem;
+                color: #cb4242;
+            }
+
+            .footer-line {
+                margin-top: 1rem;
+                font-size: 0.85rem;
+                color: rgba(24, 15, 15, 0.8);
+            }
+
+            .footer-line i {
+                margin-left: 0.3rem;
+                color: #201514;
+            }
+
+            .footer a {
+                color: rgba(243, 238, 238, 0.9);
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .footer a:hover {
+                color: #58bde5;
+            }
+
+            /* Responsive Styles */
+            @media (max-width: 992px) {
+                .hero-title {
+                    font-size: 3rem;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .hero-title {
+                    font-size: 2.5rem;
+                }
+
+                .section-title {
+                    font-size: 2rem;
+                }
+
+                .footer {
+                    padding: 4rem 0 2rem;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .hero-title {
+                    font-size: 2rem;
+                }
+
+                .contact-card {
+                    padding: 1.5rem;
+                }
+
+                .service-card {
+                    padding: 2rem 1.5rem;
+                }
+            }
+
+            .section-spacing {
+                padding: 5rem 0;
+                background: linear-gradient(to bottom, #e6eaee, #ffffff);
+            }
+
+            .section-title {
+                text-align: center;
+                margin-bottom: 3rem;
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #2d3436;
+            }
+
+            .section-title span {
+                color: #0984e3;
+                position: relative;
+            }
+
+            .section-title span::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background: #0984e3;
+                border-radius: 2px;
+            }
+
+            .awareness-card {
+                position: relative;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 20px rgba(9, 9, 9, 0.1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                height: 400px;
+            }
+
+            .awareness-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            }
+
+            .awareness-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.5s ease;
+            }
+
+            .awareness-card:hover .awareness-img {
+                transform: scale(1.1);
+            }
+
+            .awareness-overlay {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+                padding: 2rem 1.5rem;
+                transform: translateY(0);
+                transition: transform 0.3s ease;
+            }
+
+            .awareness-overlay h4 {
+                color: #d4f7f6;
+                font-size: 1.25rem;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+            }
+
+            .awareness-overlay p {
+                color: rgba(250, 246, 246, 0.9);
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+
+            .awareness-link {
+                display: inline-flex;
+                align-items: center;
+                color: #fbfbfb;
+                text-decoration: none;
+                font-weight: 500;
+                transition: transform 0.3s ease;
+            }
+
+            .awareness-link:hover {
+                transform: translateX(5px);
+            }
+
+            .awareness-link svg {
+                margin-left: 0.5rem;
+                transition: transform 0.3s ease;
+            }
+
+            .awareness-link:hover svg {
+                transform: translateX(3px);
+            }
+
+            @media (max-width: 768px) {
+                .awareness-card {
+                    height: 300px;
+                }
+
+                .section-title {
+                    font-size: 2rem;
+                }
+            }
+
+            section {
+                padding: 40px;
+                text-align: center;
+            }
+
+            .mission {
+                background-color: #f4f4f4;
+                margin-bottom: 50px;
+                animation: fadeIn 2s;
+                margin: 50px;
+            }
+
+            .about {
+                background-color: #f4f4f4;
+                margin: 40px;
+                padding: 20px;
+                border-radius: 8px;
+                animation: fadeIn 2s;
+                text-align: center;
+            }
+
+            /* Styling the headings */
+            h2,
+            h3 {
+                margin: px 0;
+            }
+
+            /* Styling the paragraph */
+            p {
+                margin-top: 10px;
+                line-height: 1.6;
+                color: #333;
+            }
+
+            /* Styling buttons */
+            button {
+                margin: 20px;
+                padding: 10px 20px;
+                background-color: #0b6f91;
+                color: rgb(242, 222, 222);
+                border: none;
+                border-radius: 15px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #3ec43b;
+            }
+
+            /* Styling and spacing for images */
+            .sliding-image {
+                margin: 10px 55px;
+                /* Horizontal space between images */
+                border: 2px solid #daf3f7;
+                border-radius: 8px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .sliding-image:hover {
+                transform: scale(1.2);
+                /* Slight zoom on hover */
+                box-shadow: 0 4px 8px rgba(1, 1, 1, 0.2);
+                /* Add shadow on hover */
+            }
+
+            .health-services {
+                background-color: #f6ebeb;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .photo {
+                width: 100%;
+                height: 100%;
+                animation: slideIn 1.5s;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateY(20px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+
+                .section-header {
+                    text-align: center;
+                    font-size: 2em;
+                    font-weight: bold;
+                    color: #333;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                }
+
+                .section-header span {
+                    color: #007bff;
+                    text-decoration: underline;
+                }
+
+                .card-container {
+                    display: flex;
+                    justify-content: center;
+                    gap: 20px;
+                    padding: 20px;
+                    flex-wrap: wrap;
+                }
+
+                .card {
+                    background-color: #fff;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    overflow: hidden;
+                    text-align: center;
+                    width: 300px;
+                }
+
+                .card img {
+                    width: 2.5rem;
+                    height: 5px;
+                    object-fit: cover;
+                }
+
+                .card-content {
+                    padding: 15px;
+                }
+
+                .card-title {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: #333;
+                    margin-bottom: 10px;
+                }
+
+                .card-text {
+                    font-size: 1em;
+                    color: #666;
+                }
+            }
+
+
+            /* Mobile Responsiveness Updates */
+            @media (max-width: 992px) {
+                .navbar-brand {
+                    font-size: 1.5rem;
+                }
+
+                .auth-container {
+                    width: 95%;
+                    margin: 20px;
+                }
+            }
+
+
+            @media (max-width: 768px) {
+
+                /* Navbar adjustments */
+                .navbar {
+                    padding: 0.5rem;
+                    height: 13vh
+                }
+
+                .navbar-nav {
+                    background-color: rgb(183, 226, 255);
+
+                    border-radius: 5%;
+
+                    .navbar-brand {
+                        font-size: 1.5rem;
+                    }
+
+                    .profile-img {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+
+                    /* Hero section */
+                    .hero {
+                        padding: 60px 0;
+                        text-align: center;
+                    }
+
+                    .hero-title {
+                        font-size: 2rem;
+                        line-height: 1.3;
+                    }
+
+                    .Download-button {
+                        margin-left: auto;
+                        margin-right: auto;
+                        display: block;
+                        width: 80%;
+                        max-width: 300px;
+                    }
+
+                    /* Services section */
+                    .service-card {
+                        margin-bottom: 20px;
+                        padding: 1.5rem;
+                    }
+
+                    /* Doctor cards */
+                    .doctor-card {
+                        margin-bottom: 30px;
+                    }
+
+                    .doctor-img {
+                        height: 250px;
+                    }
+
+                    /* Contact cards */
+                    .contact-card {
+                        width: 80vw;
+                        margin-bottom: 20px;
+                        padding: 1rem;
+                        text-align: left;
+
+                    }
+
+
+
+                    .contact-icon {
+                        font-size: 1.5rem;
+                        margin-right: 1rem;
+                    }
+
+                    /* Awareness cards */
+                    .awareness-card {
+                        height: 300px;
+                        margin-bottom: 25px;
+                    }
+
+                    .awareness-overlay {
+                        padding: 1.5rem 1rem;
+                    }
+
+                    .awareness-overlay h4 {
+                        font-size: 1.1rem;
+                    }
+
+                    .awareness-overlay p {
+                        font-size: 0.9rem;
+                    }
+
+                    /* Mission section */
+                    .service-card video {
+                        height: auto !important;
+                        max-height: 300px;
+                    }
+
+                    /* About section images */
+                    .service-card img {
+                        height: 200px !important;
+                    }
+
+                    /* Section titles */
+                    .section-title {
+                        font-size: 1.8rem;
+                        margin-bottom: 2rem;
+                    }
+
+                    /* Footer */
+                    .footer {
+                        padding: 2rem 0 1rem;
+                    }
+
+                    .contact-info p {
+                        font-size: 0.8rem;
+                        margin: 0.3rem 0;
+                    }
+                }
+
+                /* Small mobile devices */
+                @media (max-width: 576px) {
+
+                    /* Further navbar adjustments */
+                    .navbar-brand {
+                        font-size: 1.25rem;
+                    }
+
+                    .nav-link {
+                        font-size: 1rem;
+                        padding: 0.3rem 0.8rem !important;
+                    }
+
+                    /* Hero section */
+                    .hero-title {
+                        font-size: 1.75rem;
+                    }
+
+                    .lead {
+                        font-size: 1rem;
+                    }
+
+                    /* Services and cards */
+                    .service-card {
+                        padding: 1.25rem;
+                    }
+
+                    .service-icon {
+                        font-size: 2rem;
+                    }
+
+                    /* Contact section */
+                    .contact-card {
+                        padding: 0.75rem;
+                    }
+
+                    .contact-icon {
+                        font-size: 1.25rem;
+                    }
+
+                    /* Mission section video */
+                    .service-card video {
+                        max-height: 200px;
+                    }
+
+                    /* General spacing */
+                    .section-spacing {
+                        padding: 3rem 0;
+                    }
+
+                    /* Container padding */
+                    .container {
+                        padding-left: 15px;
+                        padding-right: 15px;
+                    }
+                }
+
+                /* Landscape orientation fixes */
+                @media (max-height: 500px) and (orientation: landscape) {
+                    .hero {
+                        padding: 30px 0;
+                    }
+
+                    .doctor-img {
+                        height: 200px;
+                    }
+
+                    .awareness-card {
+                        height: 250px;
+                    }
+                }
+
+                /* Hero Section Mobile Fixes */
+                @media (max-width: 768px) {
+                    .hero {
+                        min-height: 100vh;
+                        /* Full viewport height */
+                        position: relative;
+                        display: flex;
+                        align-items: flex-end;
+                        /* Align content to bottom */
+                        padding: 120px 0 40px !important;
+                        /* Increased top padding */
+                        background-position: center 25% !important;
+                        /* Adjust background position */
+                    }
+
+                    .hero .container {
+                        background: rgba(0, 0, 0, 0.7);
+                        /* Darker overlay for better readability */
+                        padding: 25px;
+                        border-radius: 15px;
+                        margin-bottom: 10px;
+                        /* Space from bottom */
+                        backdrop-filter: blur(5px);
+                        width: 90%;
+                        /* Slightly narrower than full width */
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+
+                    .hero .hero-title {
+                        font-size: 2rem !important;
+                        line-height: 1.3 !important;
+                        margin-bottom: 5px !important;
+                        background-color: #ffeaea;
+                        color: rgb(16, 23, 102) !important;
+                    }
+
+                    .hero .lead {
+                        font-size: 1rem !important;
+                        line-height: 1.4 !important;
+                        font-weight: bolder;
+                        background-color: #d6d6d66e;
+                        margin-bottom: 20px !important;
+                        color: rgb(8 75 94 / 90%);
+                        border-radius: 10%;
+
+                    }
+
+                    .hero .Download-button {
+                        margin: 0 auto !important;
+                        width: auto !important;
+                        padding: 10px 20px !important;
+                    }
+                }
+
+                /* Additional fix for very small screens */
+                @media (max-width: 576px) {
+                    .hero {
+                        min-height: 90vh;
+                        padding: 100px 0 30px !important;
+                    }
+
+                    .hero .container {
+                        padding: 20px;
+                    }
+
+                    .hero .hero-title {
+                        font-size: 1.75rem !important;
+                    }
+                }
+
+                .nav-link.btn.btn-outline-primary {
+                    color: #0d6efd;
+                    border: 1px solid #0d6efd;
+                    border-radius: 5px;
+                    transition: all 0.3s ease;
+                }
+
+                .nav-link.btn.btn-outline-primary:hover {
+                    background-color: #0d6efd;
+                    color: white;
+                }
+
+                /* Mobile-specific styles */
+                @media (max-width: 991px) {
+                    .nav-link.btn.btn-outline-primary {
+                        display: inline-block;
+                        width: auto;
+                        margin: 10px 15px;
+                    }
+
+                    .nav-link.btn.btn-outline-primary:hover {
+                        background-color: #0d6efd;
+                        color: white;
+                        transform: translateY(-2px);
+                    }
+
+                    / *
+                }
+
+                ------------------------------------------------------------------------------------------------ */ html {
+                    overflow-x: hidden;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                body {
+                    overflow-x: hidden;
+                    width: 100%;
+                    position: relative;
+                    -webkit-text-size-adjust: 100%;
+                    touch-action: manipulation;
+                }
+
+                /* Mobile-specific overrides */
+                @media (max-width: 768px) {
+
+                    /* Container padding adjustments */
+                    .container {
+                        padding-left: 15px;
+                        padding-right: 15px;
+                        overflow-x: hidden;
+                    }
+
+                    /* Navbar adjustments */
+                    .navbar {
+                        padding: 0.5rem;
+                    }
+
+                    .navbar-brand {
+                        font-size: 1.25rem;
+                    }
+
+                    .nav-link {
+                        padding: 0.5rem 1rem !important;
+                    }
+
+                    /* Hero section adjustments */
+                    .hero {
+                        padding: 60px 0 40px !important;
+                        min-height: auto;
+                    }
+
+                    .hero-title {
+                        font-size: 1.75rem !important;
+                        line-height: 1.3 !important;
+                    }
+
+                    /* Service cards adjustments */
+                    .service-card {
+                        margin: 10px 0;
+                        padding: 15px;
+                    }
+
+                    /* Contact cards adjustments */
+                    .contact-card {
+                        margin: 10px 0;
+                    }
+
+                    /* Image adjustments */
+                    img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+
+                    /* Video adjustments */
+                    video {
+                        max-width: 100%;
+                        height: auto !important;
+                    }
+
+                    /* Button adjustments */
+                    .Download-button {
+                        margin: 20px auto !important;
+                        width: auto !important;
+                        max-width: 80% !important;
+                    }
+
+                    /* Section spacing adjustments */
+                    .section-spacing {
+                        padding: 40px 0;
+                    }
+
+                    /* Text adjustments */
+                    .lead {
+                        font-size: 1rem !important;
+                    }
+
+                    /* Fix for horizontal scroll issues */
+                    .row {
+                        margin-left: 0;
+                        margin-right: 0;
+                    }
+                }
+
+                /* Small mobile devices */
+                @media (max-width: 576px) {
+                    .hero-title {
+                        font-size: 1.5rem !important;
+                    }
+
+                    .section-title {
+                        font-size: 1.3rem;
+                    }
+
+                    .contact-card {
+                        padding: 10px;
+                    }
+                }
+
+                /* Prevent content overflow */
+                * {
+                    max-width: 100%;
+                    box-sizing: border-box;
+                }
+
+                @media (max-width: 768px) {
+                    .hero {
+                        min-height: 100vh;
+                        /* Full viewport height */
+                        position: relative;
+                        display: flex;
+                        align-items: flex-end;
+                        /* Align content to bottom */
+                        padding: 120px 0 40px !important;
+                        /* Increased top padding */
+                        background-position: center 25% !important;
+                        /* Adjust background position */
+                    }
+
+                    .hero .container {
+                        background: rgba(0, 0, 0, 0.7);
+                        /* Darker overlay for better readability */
+                        padding: 25px;
+                        border-radius: 15px;
+                        margin-bottom: 10px;
+                        /* Space from bottom */
+                        backdrop-filter: blur(5px);
+                        width: 90%;
+                        /* Slightly narrower than full width */
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+
+                    .hero .hero-title {
+                        font-size: 2rem !important;
+                        line-height: 1.3 !important;
+                        margin-bottom: 5px !important;
+                        background-color: #ffeaea;
+                        color: rgb(16, 23, 102) !important;
+                    }
+
+                    .hero .lead {
+                        font-size: 1rem !important;
+                        line-height: 1.4 !important;
+                        font-weight: bolder;
+                        background-color: #d6d6d66e;
+                        margin-bottom: 20px !important;
+                        color: rgb(8 75 94 / 90%);
+                        border-radius: 10%;
+
+                    }
+
+                    .hero .Download-button {
+                        margin: 0 auto !important;
+                        width: auto !important;
+                        padding: 10px 20px !important;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .hero {
+                        min-height: 90vh;
+                        /* Full viewport height */
+                        position: relative;
+                        display: flex;
+                        align-items: flex-end;
+                        /* Align content to bottom */
+                        padding: 120px 0 20px !important;
+                        /* Increased top padding */
+                        background-position: center 65% !important;
+                        /* Adjust background position */
+                    }
+
+                    .hero .container {
+                        background: rgba(0, 0, 0, 0.7);
+                        /* Darker overlay for better readability */
+                        padding: 25px;
+                        border-radius: 15px;
+                        margin-bottom: 10px;
+                        /* Space from bottom */
+                        backdrop-filter: blur(5px);
+                        width: 90%;
+                        /* Slightly narrower than full width */
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+
+                    .hero .hero-title {
+                        font-size: 2rem !important;
+                        line-height: 1.3 !important;
+                        margin-bottom: 5px !important;
+                        background-color: #ffeaea;
+                        color: rgb(16, 23, 102) !important;
+                    }
+
+                    .hero .lead {
+                        font-size: 1rem !important;
+                        line-height: 1.4 !important;
+                        font-weight: bolder;
+                        background-color: #d6d6d66e;
+                        margin-bottom: 20px !important;
+                        color: rgba(0, 0, 0, 0.9);
+                        border-radius: 10%;
+
+                    }
+
+                    .hero .Download-button {
+                        margin: 0 auto !important;
+                        width: auto !important;
+                        padding: 10px 20px !important;
+                    }
+                }
+
+                /* Mission Section Styles */
+                .section-spacing#mission {
+                    padding: 5rem 0;
+                }
+
+                .section-spacing#mission .service-card {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 2rem;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                /* Left container - Text content */
+                .section-spacing#mission .col-lg-6:first-child .service-card {
+                    justify-content: flex-start;
+                    gap: 1.5rem;
+                }
+
+                .section-spacing#mission .profile-img {
+                    width: 80px;
+                    height: 80px;
+                    margin-bottom: 1rem;
+                }
+
+                .section-spacing#mission h4 {
+                    margin: 0;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    line-height: 1.4;
+                    color: #333;
+                }
+
+                .section-spacing#mission .lead {
+                    flex: 1;
+                    overflow-y: auto;
+                    padding-right: 0.5rem;
+                    margin: 0;
+                    font-size: 1.1rem;
+                    line-height: 1.6;
+                    color: #666;
+                }
+
+                /* Custom scrollbar for the text container */
+                .section-spacing#mission .lead::-webkit-scrollbar {
+                    width: 3px;
+                    scrollbar-color: #d2abff #9ab5ff;
+                }
+
+                .section-spacing#mission .lead::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 3px;
+                }
+
+                .section-spacing#mission .lead::-webkit-scrollbar-thumb {
+                    background: #888;
+                    border-radius: 3px;
+                }
+
+                /* Right container - Video content */
+                .section-spacing#mission .col-lg-6:last-child .service-card {
+                    justify-content: center;
+                    align-items: center;
+                    padding: 1.5rem;
+                }
+
+                .section-spacing#mission video {
+                    width: 100%;
+                    height: auto;
+                    max-height: 100%;
+                    object-fit: contain;
+                    border-radius: 8px;
+                }
+
+                /* Responsive adjustments */
+                @media (max-width: 991px) {
+                    .section-spacing#mission .col-lg-6 {
+                        margin-bottom: 2rem;
+                    }
+
+                    .section-spacing#mission .col-lg-6:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <img src="{{ url_for('static', filename='pic4.jpg')}}" alt="WELCOME" class="profile-img me-2">
+                MediCare
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item hover">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item hover">
+                        <a class="nav-link" href="#doctors">Doctors</a>
+                    </li>
+                    <li class="nav-item hover">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+
+                    <li class="nav-item hover">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item hover">
+                        <a class="nav-link btn btn-outline-primary" href="{{ url_for('login') }}">Get Started</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero"
+        style="background-image: url('static/pic5.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; color: white; padding: 100px 0;"
+        <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="hero-title">We Provide <span>High Solutions</span> for Your Health</h1>
+                <p class="lead mb-4">Experience world-class healthcare with our team of dedicated professionals and
+                    cutting-edge medical facilities. </p>
+                <a class="Download-button" href="{{ url_for('login') }}" style="text-decoration: none; color: inherit;">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32">
+                        <path
+                            d="M23.371 29.529c0 0 0.335-2.012-1.731-4.469 2.011-5.641 2.29-10.778 2.29-10.778s4.133 0.95 4.133 5.026c-0.001 6.981-4.692 10.221-4.692 10.221zM11.979 27.078c0 0-2.768-8.883-2.768-12.568 0-1.658 0.187-3.133 0.478-4.472h12.61c0.293 1.34 0.481 2.816 0.481 4.473 0 3.629-2.76 12.567-2.76 12.567h-8.041zM15.99 12.069c-1.418 0-2.568 1.15-2.568 2.569 0 1.418 1.15 2.569 2.568 2.569s2.569-1.15 2.569-2.569c0.001-1.419-1.15-2.569-2.569-2.569zM15.438 0.596v-3.498h1v3.409c1.143 0.832 4.236 3.478 5.635 8.575h-12.16c1.352-4.957 4.296-7.574 5.525-8.486zM8.629 29.529c0 0-4.691-3.24-4.691-10.221 0-4.076 4.133-5.026 4.133-5.026s0.279 5.137 2.289 10.778c-2.067 2.458-1.731 4.469-1.731 4.469zM17.691 30.045l-0.838-0.838-0.893 2.793-1.062-2.793-0.726 1.451-1.062-2.625h5.752l-1.171 2.012z"
+                            fill="white"></path>
+                    </svg>
+                    <span class="fw-bold">GET STARTED</span>
+                </a>
+
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <!-- Contact Info -->
+    <section class="py-5 bg-gradient">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Get in Touch With Us</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="contact-card">
+                        <div class=" text-dark" style="justify-content: center;">
+                            <i class="fas fa-phone contact-icon"></i>
+                            <div>
+                                <div class="fw-bold text-dark">Give us a call</div>
+                                <strong>1-999-123-4567</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-card">
+                        <div class="text-dark">
+                            <i class="fas fa-envelope contact-icon"></i>
+                            <div>
+                                <div class="text-dark fw-bold">Send us a message</div>
+                                <strong style="font-size: x-small;">medicare.services.team@gmail.com</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-card">
+                        <div class=" text-dark" style="justify-content: center;">
+                            <i class="fas fa-globe contact-icon"></i>
+                            <div>
+                                <div class="text-dark fw-bold">Visit us</div>
+                                <strong>www.medicare.com</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Services Section -->
+    <section id="services" class="section-spacing">
+        <div class="container">
+            <h2 class="section-title">Health <span>Services</span> We Provide</h2>
+            <div class="row g-4">
+                <!-- Online Consultations -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <i class="fas fa-video service-icon"></i>
+                        <h4>E-Consultations</h4>
+                        <p class="lead mb-0">Connect with expert doctors via secure video calls from home.</p>
+                    </div>
+                </div>
+
+                <!-- E-Prescriptions -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <i class="fas fa-prescription service-icon"></i>
+                        <h4>E-Prescriptions</h4>
+                        <p class="lead mb-0">Get instant digital prescriptions after your online consultation.</p>
+                    </div>
+                </div>
+
+                <!-- Emergency Care -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <i class="fas fa-ambulance service-icon"></i>
+                        <h4>Emergency Care</h4>
+                        <p class="lead mb-0">Get immediate medical assistance in case of an emergency.</p>
+                    </div>
+                </div>
+
+                <!-- Symptom Checkup -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <i class="fas fa-stethoscope service-icon"></i>
+                        <h4>Symptom Checkup</h4>
+                        <p class="lead mb-0">Quick assessment of your symptoms and concerns</p>
+                    </div>
+                </div>
+
+                <!-- Lab Test Booking -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <i class="fas fa-vial service-icon"></i>
+                        <h4>Lab Test Booking</h4>
+                        <p class="lead mb-0">Book lab tests online with home sample collection.</p>
+                    </div>
+                </div>
+
+                <!-- 24/7 Support -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <i class="fas fa-headset service-icon"></i>
+                        <h4>24/7 Support</h4>
+                        <p class="lead mb-0">We are here to support you every step of the way.</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section id="doctors" class="section-spacing bg-light">
+        <div class="container">
+            <h2 class="section-title">Our <span>Dedicated</span> Doctors</h2>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="doctor-card">
+                        <img src="https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5790.jpg"
+                            alt="Dr. Jack Guzman" class="doctor-img">
+                        <div class="doctor-info">
+                            <h5 class="mb-1 ">Dr. Jack Guzman</h5>
+                            <p class="mb-0 text-warning">Cardiologist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="doctor-card">
+                        <img src="https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg"
+                            alt="Dr. Hannah Ford" class="doctor-img">
+                        <div class="doctor-info">
+                            <h5 class="mb-1">Dr. Hannah Ford</h5>
+                            <p class="mb-0 text-warning">Neurologist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="doctor-card">
+                        <img src="https://img.freepik.com/free-photo/portrait-smiling-male-doctor_171337-1532.jpg"
+                            alt="Dr. James Wilson" class="doctor-img">
+                        <div class="doctor-info">
+                            <h5 class="mb-1">Dr. James Wilson</h5>
+                            <p class="mb-0 text-warning">Surgeon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-spacing bg-light" id="safe-space">
+        <div>
+            <div class="container py-5">
+                <h2 class="section-title">Our <span>Safe
+                        Space</span> <br>We Listen, We Don’t Judge</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="{{ url_for('static', filename='pic6.jpg') }}" class="card-img-top mx-auto mt-3"
+                                alt="Safe Space 1"
+                                style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;">
+                            <div class="card-body">
+                                <h4 class="card-title">Private Conversations</h4>
+                                <p class="lead mb-0">A judgment-free zone for ages 13-30 to ask any sensitive or
+                                    personal questions.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="{{ url_for('static', filename='pic7.jpg') }}" class="card-img-top mx-auto mt-3"
+                                alt="Safe Space 2"
+                                style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;">
+                            <div class="card-body">
+                                <h4 class="card-title">Complete Anonymity</h4>
+                                <p class="lead mb-0">Your queries about sex, periods, or health are answered with
+                                    respect and confidentiality.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="{{ url_for('static', filename='pic8.jpg') }}" class="card-img-top mx-auto mt-3"
+                                alt="Safe Space 3"
+                                style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;">
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-wrap: wrap;">We’re Here for You Everytime</h4>
+                                <p class="lead mb-0">Feel safe and understood when discussing your health concerns, free
+                                    from judgment or bias.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </section>
+
+    <section class="section-spacing" aria-label="Health Awareness Center">
+        <div class="container">
+            <h2 class="section-title">Health <span>Awareness</span> Center</h2>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <article class="awareness-card">
+                        <img src="{{ url_for('static', filename='pic2.jpeg') }}"
+                            alt="Doctor explaining diabetes management to a patient" class="awareness-img">
+                        <div class="awareness-overlay">
+                            <h4>Understanding Diabetes</h4>
+                            <p class="lead mb-4">Learn about diabetes types, symptoms, and effective management
+                                strategies for a healthier
+                                life.</p>
+                            <a href="https://en.wikipedia.org/wiki/Diabetes#:~:text=Diabetes%2C%20also%20known%20as%20diabetes,z%2C%20%2Dt%C9%AAs/"
+                                style="text-decoration: none;" class="awareness-link">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <article class="awareness-card">
+                        <img src="{{ url_for('static', filename='d2.jpg') }}"
+                            alt="Nutritionist demonstrating healthy meal preparation" class="awareness-img">
+                        <div class="awareness-overlay">
+                            <h4>Healthy Eating Habits</h4>
+                            <p class="lead mb-4">Discover nutrition guidelines and meal planning tips for
+                                maintaining a
+                                balanced diet.</p>
+                            <a href="https://en.wikipedia.org/wiki/Healthy_diet" style="text-decoration: none;"
+                                class="awareness-link">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <article class="awareness-card">
+                        <img src="{{ url_for('static', filename='d3.jpg') }}"
+                            alt="Professional demonstrating stress relief exercises" class="awareness-img">
+                        <div class="awareness-overlay">
+                            <h4>Stress Management</h4>
+                            <p class="lead mb-4"> Learn practical techniques and daily practices to reduce
+                                stress and
+                                improve mental
+                                wellbeing.</p>
+                            <a href="https://en.wikipedia.org/wiki/Stress_management" style="text-decoration: none;"
+                                class="awareness-link">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <article class="awareness-card">
+                        <img src="{{ url_for('static', filename='d4.jpg') }}"
+                            alt="Sleep specialist explaining good sleep habits" class="awareness-img">
+                        <div class="awareness-overlay">
+                            <h4>Healthy Sleep Habits</h4>
+                            <p>Explore science-backed strategies for better sleep quality and establishing
+                                proper sleep
+                                routines.</p>
+                            <a href="https://en.wikipedia.org/wiki/Sleep" style="text-decoration: none;"
+                                class="awareness-link">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section-spacing" id="mission">
+        <div class="container">
+            <h2 class="section-title">Our <span>Mission</span></h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6" style="height: 500px;">
+                    <div class="service-card" style="height: 100%; display: flex; flex-direction: column;">
+                        <img src="{{ url_for('static', filename='pic4.jpg')}}" alt="WELCOME" class="profile-img me-2"
+                            style="flex-shrink: 0; align-self: center;;">
+                        <h4 style="flex-shrink: 0;">We Provide High Solutions for Your Health</h4>
+                        <p class="lead mb-0" style="flex: 1; overflow-y: auto; margin-bottom: 0 !important;">
+                            At MediCare, we aim to make quality healthcare accessible, convenient, and tailored to your
+                            needs. <br> Our platform connects you with expert doctors, trusted health resources, and
+                            innovative tools to manage your well-being, all from home. <br> Your health is our top
+                            priority, and we are here to support you at every step.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6" style="height: 500px;">
+                    <div class="service-card"
+                        style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <video autoplay muted loop class="w-100 rounded" style="max-height: 100%; object-fit: contain;"
+                            controls>
+                            <source src="/static/v1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-spacing" id="about">
+        <div class="container">
+            <h2 class="section-title text-center">About <span>Us</span></h2>
+
+            <!-- About Us Content -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <p class="lead mb-4">
+                            At MediCare, we are dedicated to providing accessible, reliable, and compassionate
+                            healthcare solutions tailored to your needs. Whether it's connecting you with top
+                            professionals or delivering trusted advice, your well-being is our priority. We
+                            believe in
+                            making healthcare simple, efficient, and always within reach—because your health
+                            matters, at
+                            every step of the way.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Row -->
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card p-0 overflow-hidden">
+                        <img src="static/a1.jpg" alt="Healthcare Facility 1" class="img-fluid w-100"
+                            style="height: 300px; object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card p-0 overflow-hidden">
+                        <img src="static/a2.jpg" alt="Healthcare Facility 2" class="img-fluid w-100"
+                            style="height: 300px; object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-card p-0 overflow-hidden">
+                        <img src="static/a3.jpg" alt="Healthcare Facility 3" class="img-fluid w-100"
+                            style="height: 300px; object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+    <footer class="footer" id="contact">
+        <div class="container text-center">
+            <div class="contact-info mb-3">
+                <p><i class="fas fa-phone"></i> +1 (999) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> medicare.services.team@gmail.com</p>
+                <p><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 7:00 PM</p>
+            </div>
+            <p class="footer-line">
+                &copy; 2024 MediCare. All rights reserved. Designed with <i class="fas fa-heart text-danger"></i> for
+                better healthcare.
+            </p>
+        </div>
+    </footer>
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.x.x/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.x.x/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.x.x/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbarCollapse = document.getElementById('navbarNav');
+            const navbarToggler = document.querySelector('.navbar-toggler');
+
+            // Initialize the Bootstrap collapse
+            let bsCollapse = new bootstrap.Collapse(navbarCollapse, {
+                toggle: false
+            });
+
+            // Toggle navbar on toggler click
+            navbarToggler.addEventListener('click', function (e) {
+                e.stopPropagation();
+                bsCollapse.toggle();
+            });
+
+            // Close navbar when clicking links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    bsCollapse.hide();
+                });
+            });
+
+            // Close navbar when clicking outside
+            document.addEventListener('click', function (event) {
+                const isNavbarOpen = navbarCollapse.classList.contains('show');
+                const clickedInsideNavbar = navbarCollapse.contains(event.target);
+                const clickedOnToggler = navbarToggler.contains(event.target);
+
+                if (isNavbarOpen && !clickedInsideNavbar && !clickedOnToggler) {
+                    bsCollapse.hide();
+                }
+            });
+        });
+    </script>
+
+</html>

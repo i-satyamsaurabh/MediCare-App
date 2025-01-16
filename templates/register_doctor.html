@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" style="border-radius: 50px; height: 100%;" type="image/x-icon"
+        href="{{ url_for('static', filename='pic4.jpg') }}">
+
+    <style>
+        body {
+            background: #fbfdfe;
+            height: 100vh;
+            padding-top: 5vh;
+            padding-left: 10vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: "Libre Baskerville", serif;
+
+        }
+
+        .register-container {
+            width: 90%;
+            max-width: 1100px;
+            height: 75vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .register-sidebar {
+            width: 40%;
+            background: linear-gradient(135deg, #c5ff9b, #0a7ecc);
+            padding: 40px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .register-sidebar img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .register-sidebar h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .register-form {
+            width: 60%;
+            padding: 10px 30px;
+            padding: top 28px;
+            padding: bottom 0px;
+            display: flex;
+            flex-direction: column;
+
+
+        }
+
+        .form-group {
+            margin-bottom: 5px;
+        }
+
+        .form-label {
+            color: #2B3674;
+            font-weight: 500;
+        }
+
+        .form-control,
+        .form-select {
+            height: 35px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            padding: 0 15px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: none;
+        }
+
+        .btn {
+            width: auto;
+            height: auto;
+            margin: 0.5em;
+            background: rgb(118, 94, 250);
+            color: white;
+            border: none;
+            border-radius: 0.625em;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        button:hover {
+            color: black;
+        }
+
+        button:after {
+            content: "";
+            background: rgb(3, 5, 30);
+            position: absolute;
+            z-index: -1;
+            left: -20%;
+            right: -20%;
+            top: 0;
+            bottom: 0;
+            transform: skewX(-45deg) scale(0, 1);
+            transition: all 0.5s;
+        }
+
+        button:hover:after {
+            transform: skewX(-45deg) scale(1, 1);
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row>div {
+            flex: 1;
+        }
+
+        @media (max-width: 800px) {
+            .register-container {
+                flex-direction: column;
+                max-width: 500px;
+                margin: 20px;
+            }
+
+            .register-sidebar,
+            .register-form {
+                width: 100%;
+            }
+
+            .register-sidebar {
+                padding: 30px;
+
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+        }
+
+        .navbar {
+            padding: 1rem 0;
+            background: linear-gradient(rgb(248, 249, 249), rgb(214, 234, 240));
+            border-bottom: 1px solid rgba(15, 9, 9, 0.1);
+            box-shadow: 0 2px 15px rgba(222, 103, 103, 0.04);
+            height: 70px;
+            border: #f5fafa solid 1px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            color: #212529;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #0d6efd;
+        }
+
+        .btn-appointment {
+            background-color: #0d6efd;
+            color: #fff;
+            font-size: 1rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+        }
+
+        .flash-message {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            color: rgb(5, 5, 5);
+        }
+
+        .flash-success {
+            background-color: #b2ee51;
+        }
+
+        .flash-danger {
+            background-color: #85aabe;
+        }
+
+        .flash-error {
+            background-color: #e61d31;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                padding: 0;
+                height: auto;
+            }
+
+            .register-container {
+                height: auto;
+                min-height: 100vh;
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .register-sidebar {
+                padding: 20px;
+            }
+
+            .register-form {
+                padding: 20px;
+                overflow-y: auto;
+            }
+        }
+
+        .navbar {
+            padding: 1rem 0;
+            background: linear-gradient(rgb(248, 249, 249), rgb(214, 234, 240));
+            border-bottom: 1px solid rgba(15, 9, 9, 0.1);
+            box-shadow: 0 2px 15px rgba(222, 103, 103, 0.04);
+            height: 70px;
+            border: #f5fafa solid 1px;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            color: #212529;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #0d6efd;
+        }
+
+        /* New/Updated Mobile Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem;
+                height: auto;
+                min-height: 60px;
+            }
+
+            .navbar-brand {
+                font-size: 1.4rem;
+                margin-left: 10px;
+            }
+
+            .navbar-toggler {
+                margin-right: 10px;
+                padding: 4px 8px;
+                border: 2px solid #0d6efd;
+            }
+
+            .navbar-toggler:focus {
+                box-shadow: none;
+                outline: none;
+            }
+
+            .navbar-collapse {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                border-radius: 0 0 15px 15px;
+                z-index: 1000;
+            }
+
+            .navbar-nav {
+                padding: 0.5rem 0;
+            }
+
+            .nav-item {
+                margin: 8px 0;
+            }
+
+            .nav-link {
+                padding: 8px 15px;
+                border-radius: 8px;
+                background-color: #f8f9fa;
+                font-size: 1rem;
+                font-weight: 500;
+                color: #0d6efd;
+                transition: all 0.3s ease;
+            }
+
+            .nav-link:hover,
+            .nav-link.active {
+                background-color: #0d6efd;
+                color: white;
+            }
+
+            .btn-warning {
+                width: 100%;
+                margin-top: 10px;
+                padding: 8px;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+            .navbar .container {
+                padding: 0;
+            }
+
+            .collapse.navbar-collapse {
+                padding: 15px;
+                background-color: white;
+                border-radius: 0 0 15px 15px;
+                width: 100%;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="#" src>Medicare</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url_for('index')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="{{ url_for('login') }}" class="btn btn-warning btn-lg">Login </a>
+            </div>
+        </div>
+    </nav>
+    <div class="reset-container" style="margin-top: 65px;">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="register-container">
+            <div class="register-sidebar">
+                <img src="{{ url_for('static', filename='pic4.jpg') }}" alt="Medicare Logo" class="round"
+                    style="border-radius: 50px;">
+                <h2 style="font-weight: bolder; color: rgb(211, 255, 140);">Doctor Registration</h2>
+                <p class="lead text-center" style="font-family: 'Charm', cursive; color: rgb(236, 243, 255);">Join our
+                    healthcare
+                    platform to access quality
+                    medical services and manage your
+                    health records efficiently.</p>
+            </div>
+
+            <div class="register-form">
+                <form action="{{ url_for('register_doctor') }}" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder=" Enter your fullname" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Specialization</label>
+                            <select class="form-select" id="specialization" name="specialization" required>
+
+                                {% for i in departments %}
+                                <option value="{{ i.id }}">{{ i.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Experience </label>
+                            <input type="number" class="form-control" id="experience" name="experience"
+                                placeholder="Enter your experience in years" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Enter your email " required>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" name="description"
+                                placeholder="Enter your description" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" name="city"
+                                placeholder="Enter the city you live in" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Profile Image</label>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*"
+                                placeholder="Upload your photo">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Create password" required>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button type="submit" class="btn btn-primary"> Register</button>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg btn-custom"
+                            style="color: #fff; width: auto;">Sign In </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
