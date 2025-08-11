@@ -194,24 +194,13 @@ Please read our [Contributing Guidelines](CONTRIBUTING.md) for more details.
 - **Performance**: <2s average response time
 - **Uptime**: 99.9%
 
-## 🐛 Issues & Support
-
-Found a bug? Have a feature request? 
-
-- **Bug Reports**: [Create an Issue](https://github.com/your-username/medicare-telehealth-app/issues/new?template=bug_report.md)
-- **Feature Requests**: [Request a Feature](https://github.com/your-username/medicare-telehealth-app/issues/new?template=feature_request.md)
-- **Documentation**: Check our [Wiki](https://github.com/your-username/medicare-telehealth-app/wiki)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
 **Satyam Saurabh**
 - 🌐 LinkedIn: [linkedin.com/in/satyam-saurabh](https://linkedin.com/in/satyam-saurabh)
 - 📧 Email: satyam2610saurabh@gmail.com
-- 💻 GitHub: [@your-username](https://github.com/your-username)
+- 💻 GitHub: [@i-satyamsaurabh](https://github.com/i-satyamsaurabh)
 
 ## 🙏 Acknowledgments
 
@@ -228,8 +217,7 @@ If this project helped you or you find it interesting, please consider giving it
 
 <div align="center">
 
-**Built with ❤️ for better healthcare accessibility**
 
-[🚀 Live Demo](https://your-app-url.com) • [📖 Documentation](https://github.com/your-username/medicare-telehealth-app/wiki) • [🐛 Report Bug](https://github.com/your-username/medicare-telehealth-app/issues)
+[🚀 Live Demo](https://medicare-app-gess.onrender.com)  • [🐛 Report Bug](https://github.com/i-satyamsaurabh/MediCare-App/issues)
 
 </div>
